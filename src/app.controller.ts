@@ -1,12 +1,18 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { AppService } from './app.service';
 import { Token } from './interfaces/token.interface';
+import { CreateTokenDto } from './dto/create-token-dto';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Post()
+  async create(@Body() createTokenDto: CreateTokenDto) {
+    return this.appService.createToken(createTokenDto);
+  }
 
   @Get()
   async getAll(): Promise<Token[]> {
