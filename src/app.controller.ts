@@ -21,11 +21,7 @@ export class AppController {
 
   @Get(':id')
   async get(@Param('id') id: string): Promise<Token> {
-    const idNum = Number(id);
-
-    if (!idNum && idNum !== 0) return;
-
-    const token = await this.appService.getTokenById(idNum);
+    const token = await this.appService.getTokenById(id);
 
     if (!token)
       throw new HttpException(
@@ -41,11 +37,7 @@ export class AppController {
     @Param('id') id: string,
     @Body() createTokenDto: CreateTokenDto,
   ): Promise<Token> {
-    const idNum = Number(id);
-
-    if (!idNum && idNum !== 0) return;
-
-    const token = await this.appService.updateToken(idNum, createTokenDto);
+    const token = await this.appService.updateToken(id, createTokenDto);
 
     if (!token)
       throw new HttpException(

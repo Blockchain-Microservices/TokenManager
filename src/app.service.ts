@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { Token } from './interfaces/token.interface';
 import { CreateTokenDto } from './dto/create-token-dto';
@@ -5,25 +6,25 @@ import { CreateTokenDto } from './dto/create-token-dto';
 @Injectable()
 export class AppService {
   private readonly tokens: Token[] = [];
-  private id = 0;
 
   createToken(tokenData: CreateTokenDto) {
-    this.tokens.push({ id: this.id++, ...tokenData });
+    const uuid = randomUUID();
+    this.tokens.push({ id: uuid, ...tokenData });
   }
 
   async getAllTokens(): Promise<Token[]> {
     return this.tokens;
   }
 
-  async getTokenById(inputId: number): Promise<Token> {
-    return this.tokens.find((token) => token.id === Number(inputId));
+  async getTokenById(inputId: string): Promise<Token> {
+    return this.tokens.find((token) => token.id === inputId);
   }
 
   async updateToken(
-    inputId: number,
+    inputId: string,
     tokenData: CreateTokenDto,
   ): Promise<Token> {
-    let token = await this.tokens.find((token) => token.id === Number(inputId));
+    let token = this.tokens.find((token) => token.id === inputId);
 
     if (!token) return null;
 
