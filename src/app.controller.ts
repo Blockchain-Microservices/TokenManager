@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { AppService } from './app.service';
@@ -26,6 +26,26 @@ export class AppController {
     if (!idNum && idNum !== 0) return;
 
     const token = await this.appService.getTokenById(idNum);
+
+    if (!token)
+      throw new HttpException(
+        `Token with id = ${id} not found`,
+        HttpStatus.NOT_FOUND,
+      );
+
+    return token;
+  }
+
+  @Put(':id')
+  async updat(
+    @Param('id') id: string,
+    @Body() createTokenDto: CreateTokenDto,
+  ): Promise<Token> {
+    const idNum = Number(id);
+
+    if (!idNum && idNum !== 0) return;
+
+    const token = await this.appService.updateToken(idNum, createTokenDto);
 
     if (!token)
       throw new HttpException(

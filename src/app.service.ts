@@ -18,4 +18,16 @@ export class AppService {
   async getTokenById(inputId: number): Promise<Token> {
     return this.tokens.find((token) => token.id === Number(inputId));
   }
+
+  async updateToken(
+    inputId: number,
+    tokenData: CreateTokenDto,
+  ): Promise<Token> {
+    let token = await this.tokens.find((token) => token.id === Number(inputId));
+
+    if (!token) return null;
+
+    token = Object.assign(token, tokenData);
+    return token;
+  }
 }
