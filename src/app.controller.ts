@@ -23,7 +23,7 @@ export class AppController {
   async get(@Param('id') id: string): Promise<Token> {
     const idNum = Number(id);
 
-    if (!idNum) return;
+    if (!idNum && idNum !== 0) return;
 
     const token = await this.appService.getTokenById(idNum);
 
