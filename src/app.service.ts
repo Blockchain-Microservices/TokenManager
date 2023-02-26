@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { Token } from './interfaces/token.interface';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
+  private readonly tokens: Token[] = [];
 }
