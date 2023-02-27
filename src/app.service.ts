@@ -20,6 +20,10 @@ export class AppService {
     return this.tokens.find((token) => token.id === inputId);
   }
 
+  async getTokenByAddress(inputAddress: string): Promise<Token> {
+    return this.tokens.find((token) => token.address === inputAddress);
+  }
+
   async updateToken(
     inputId: string,
     tokenData: CreateTokenDto,

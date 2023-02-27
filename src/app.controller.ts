@@ -20,12 +20,25 @@ export class AppController {
   }
 
   @Get(':id')
-  async get(@Param('id') id: string): Promise<Token> {
+  async getById(@Param('id') id: string): Promise<Token> {
     const token = await this.appService.getTokenById(id);
 
     if (!token)
       throw new HttpException(
         `Token with id = ${id} not found`,
+        HttpStatus.NOT_FOUND,
+      );
+
+    return token;
+  }
+
+  @Get('byAddress/:address')
+  async getByAddress(@Param('address') address: string): Promise<Token> {
+    const token = await this.appService.getTokenByAddress(address);
+
+    if (!token)
+      throw new HttpException(
+        `Token with address = ${address} not found`,
         HttpStatus.NOT_FOUND,
       );
 
