@@ -1,0 +1,16 @@
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-service
+  labels:
+    name: transaction-service
+    app: transaction
+spec:
+  type: ClusterIP
+  selector:
+    app: transaction
+  ports:
+    - port: 3000
+      targetPort: 3000
