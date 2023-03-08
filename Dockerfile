@@ -1,6 +1,6 @@
 FROM node:18-alpine AS builder
 
-WORKDIR /app/transaction
+WORKDIR /
 
 COPY package*.json ./
 COPY tsconfig.json ./
