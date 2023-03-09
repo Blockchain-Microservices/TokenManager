@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { Token } from './interfaces/token.interface';
 import { CreateTokenDto } from './dto/create-token-dto';
 
-@Controller()
+@Controller('transaction-manager')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -46,7 +46,7 @@ export class AppController {
   }
 
   @Put(':id')
-  async updat(
+  async update(
     @Param('id') id: string,
     @Body() createTokenDto: CreateTokenDto,
   ): Promise<Token> {
