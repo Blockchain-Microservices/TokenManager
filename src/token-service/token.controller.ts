@@ -1,27 +1,28 @@
 import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
-import { AppService } from './app.service';
-import { Token } from './interfaces/token.interface';
+import { TokenService } from './token.service';
 import { CreateTokenDto } from './dto/create-token-dto';
+import { UpdateResult } from 'typeorm';
+import { Token } from './entity/token.entity';
 
-@Controller('transaction-manager')
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+@Controller('token')
+export class TokenController {
+  constructor(private readonly tokenService: TokenService) {}
 
   @Post()
-  async create(@Body() createTokenDto: CreateTokenDto) {
-    return this.appService.createToken(createTokenDto);
+  async create(@Body() createTokenDto: CreateTokenDto): Promise<Token> {
+    return this.tokenService.createToken(createTokenDto);
   }
 
   @Get()
   async getAll(): Promise<Token[]> {
-    return this.appService.getAllTokens();
+    return this.tokenService.getAllTokens();
   }
 
   @Get(':id')
   async getById(@Param('id') id: string): Promise<Token> {
-    const token = await this.appService.getTokenById(id);
+    const token = await this.tokenService.getTokenById(id);
 
     if (!token)
       throw new HttpException(
@@ -34,7 +35,7 @@ export class AppController {
 
   @Get('byAddress/:address')
   async getByAddress(@Param('address') address: string): Promise<Token> {
-    const token = await this.appService.getTokenByAddress(address);
+    const token = await this.tokenService.getTokenByAddress(address);
 
     if (!token)
       throw new HttpException(
@@ -49,15 +50,7 @@ export class AppController {
   async update(
     @Param('id') id: string,
     @Body() createTokenDto: CreateTokenDto,
-  ): Promise<Token> {
-    const token = await this.appService.updateToken(id, createTokenDto);
-
-    if (!token)
-      throw new HttpException(
-        `Token with id = ${id} not found`,
-        HttpStatus.NOT_FOUND,
-      );
-
-    return token;
+  ): Promise<UpdateResult> {
+    return this.tokenService.updateToken(id, createTokenDto);
   }
 }

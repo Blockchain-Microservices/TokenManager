@@ -8,7 +8,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /transaction-manager
+          - path: /token
             pathType: Prefix
             backend:
               service:
