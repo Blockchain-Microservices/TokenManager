@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { TokenService } from './token.service';
-import { CreateTokenDto } from './dto/create-token-dto';
+import { CreateTokenDto } from './dto/create-token.dto';
 import { UpdateResult } from 'typeorm';
 import { Token } from './entity/token.entity';
 

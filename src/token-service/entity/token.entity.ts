@@ -39,13 +39,13 @@ export class Token {
         type: 'text',
         nullable: true,    
     })
-    address: string;
+    address?: string;
 
     @Column({
         type: 'text',
         nullable: true,    
     })
-    deployer: string;
+    deployer?: string;
 
     @CreateDateColumn({
         type: 'text',
