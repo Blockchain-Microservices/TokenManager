@@ -14,11 +14,11 @@ import { TokenModule } from './token-service/token.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       synchronize: false,
-      entities: ["dist/**/*.entity.js"],
+      entities: ['dist/**/*.entity.js'],
       subscribers: [path.resolve(__dirname, '../**/*.subscriber{.ts,.js}')],
       migrations: [path.resolve(__dirname, '../db/migrations/**/*{.ts,.js}')],
     }),
-    TokenModule
-  ]
+    TokenModule,
+  ],
 })
 export class AppModule {}

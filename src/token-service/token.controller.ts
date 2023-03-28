@@ -2,7 +2,6 @@ import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { TokenService } from './token.service';
-import { CreateTokenDto } from './dto/create-token.dto';
 import { UpdateResult } from 'typeorm';
 import { Token } from './entity/token.entity';
 
@@ -11,8 +10,8 @@ export class TokenController {
   constructor(private readonly tokenService: TokenService) {}
 
   @Post()
-  async create(@Body() createTokenDto: CreateTokenDto): Promise<Token> {
-    return this.tokenService.createToken(createTokenDto);
+  async create(@Body() Token: Token): Promise<Token> {
+    return this.tokenService.createToken(Token);
   }
 
   @Get()
@@ -49,8 +48,8 @@ export class TokenController {
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() createTokenDto: CreateTokenDto,
+    @Body() Token: Token,
   ): Promise<UpdateResult> {
-    return this.tokenService.updateToken(id, createTokenDto);
+    return this.tokenService.updateToken(id, Token);
   }
 }
