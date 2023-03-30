@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: token-manager-config
 data:
-  DB_HOST: "postgres-service"
+  DB_HOST: "postgres-service" 
   DB_PORT: "5432"
   DB_DATABASE: "tokens"
