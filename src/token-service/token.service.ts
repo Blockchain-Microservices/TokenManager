@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Token } from './entity/token.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
+import { CreateTokenDto } from './dto/create-token.dto';
 
 @Injectable()
 export class TokenService {
@@ -10,7 +11,7 @@ export class TokenService {
     private readonly tokenRepository: Repository<Token>,
   ) {}
 
-  createToken(tokenData: Token) {
+  createToken(tokenData: CreateTokenDto): Promise<Token> {
     const token = this.tokenRepository.create(tokenData);
     return this.tokenRepository.save(token);
   }
@@ -27,7 +28,10 @@ export class TokenService {
     return this.tokenRepository.findOneBy({ address });
   }
 
-  async updateToken(id: string, tokenData: Token): Promise<UpdateResult> {
+  async updateToken(
+    id: string,
+    tokenData: CreateTokenDto,
+  ): Promise<UpdateResult> {
     return this.tokenRepository.update({ id }, tokenData);
   }
 }
