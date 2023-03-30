@@ -30,4 +30,14 @@ spec:
             - configMapRef:
                 name: token-manager-config
             - secretRef:
-                name: token-manager-secret
+                name: token-manager-secret 
+      initContainers:
+        - name: run-migrations
+          image: token-manager-migrations:latest
+          imagePullPolicy: Never
+          command: ["migrate", "-path", "/migrations", "-database", "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
+          env:
+            - name: POSTGRESQL_URL
+              value: "postgres://postgres:postgres@postgres-service:5432/tokens?sslmode=disable"
+            - name: VERSION
+              value: "20211128095755"
