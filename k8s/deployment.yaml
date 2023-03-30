@@ -22,6 +22,8 @@ spec:
         - name: token-manager
           image: token-manager:latest
           imagePullPolicy: Never
+          securityContext:
+            privileged: true
           ports:
             - containerPort: 3000
           envFrom:
