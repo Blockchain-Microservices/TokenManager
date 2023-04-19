@@ -1,0 +1,10 @@
+apiVersion: v2
+type: application
+version: 0.1.0
+name: token-manager
+appVersion: "0.1"
+description: "token-manager"
+dependencies:
+  - name: postgresql
+    version: 12.2.8
+    repository: https://charts.bitnami.com/bitnami
