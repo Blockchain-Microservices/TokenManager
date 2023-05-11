@@ -47,6 +47,12 @@ export class Token {
   })
   deployer?: string;
 
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  txHash?: string;
+
   @CreateDateColumn({
     type: 'text',
     default: () => 'CURRENT_TIMESTAMP',

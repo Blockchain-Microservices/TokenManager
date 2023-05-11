@@ -24,4 +24,8 @@ export class CreateTokenDto {
   @IsString()
   @IsOptional()
   deployer?: string;
+
+  @IsString()
+  @IsOptional()
+  txHash?: string;
 }

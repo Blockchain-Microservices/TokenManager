@@ -1,10 +1,11 @@
-import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Patch } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { TokenService } from './token.service';
 import { UpdateResult } from 'typeorm';
 import { Token } from './entity/token.entity';
 import { CreateTokenDto } from './dto/create-token.dto';
+import { UpdateTokenDto } from './dto/update-token.dto';
 
 @Controller('token')
 export class TokenController {
@@ -52,5 +53,13 @@ export class TokenController {
     @Body() token: CreateTokenDto,
   ): Promise<UpdateResult> {
     return this.tokenService.updateToken(id, token);
+  }
+
+  @Patch(':txHash')
+  async updateByHash(
+    @Param('txHash') hash: string,
+    @Body() token: UpdateTokenDto,
+  ): Promise<UpdateResult> {
+    return this.tokenService.updateTokenByHash(hash, token);
   }
 }

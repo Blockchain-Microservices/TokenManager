@@ -3,6 +3,7 @@ import { Token } from './entity/token.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
 import { CreateTokenDto } from './dto/create-token.dto';
+import { UpdateTokenDto } from './dto/update-token.dto';
 
 @Injectable()
 export class TokenService {
@@ -33,5 +34,12 @@ export class TokenService {
     tokenData: CreateTokenDto,
   ): Promise<UpdateResult> {
     return this.tokenRepository.update({ id }, tokenData);
+  }
+
+  async updateTokenByHash(
+    hash: string,
+    tokenData: UpdateTokenDto,
+  ): Promise<UpdateResult> {
+    return this.tokenRepository.update({ txHash: hash }, tokenData);
   }
 }
