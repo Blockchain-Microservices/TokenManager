@@ -1,26 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: transaction-deployment
+  name: token-manager-deployment
   labels:
-    name: transaction-deployment
-    app: transaction
+    name: token-manager-deployment
+    app: token-manager
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: transaction-pod
-      app: transaction
+      name: token-manager-pod
+      app: token-manager
   template:
     metadata:
-      name: transaction-pod
+      name: token-manager-pod
       labels:
-        name: transaction-pod
-        app: transaction
+        name: token-manager-pod
+        app: token-manager
     spec:
       containers:
-        - name: transaction-manager
-          image: transaction-manager:latest
+        - name: token-manager
+          image: token-manager:latest
           imagePullPolicy: Never
+          securityContext:
+            privileged: true
           ports:
             - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: token-manager-config
+            - secretRef:
+                name: token-manager-secret 
+      initContainers:
+        - name: run-migrations
+          image: token-manager-migrations:latest
+          imagePullPolicy: Never
+          command: ["migrate", "-path", "/migrations", "-database", "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
+          env:
+            - name: POSTGRESQL_URL
+              value: "postgres://postgres:postgres@postgres-service:5432/tokens?sslmode=disable"
+            - name: VERSION
+              value: "20211128095755"
