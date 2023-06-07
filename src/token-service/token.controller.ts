@@ -9,13 +9,18 @@ import { UpdateTokenDto } from './dto/update-token.dto';
 
 @Controller('token')
 export class TokenController {
+  private breakStatus = false;
   constructor(private readonly tokenService: TokenService) {}
 
   @Post()
   async create(@Body() Token: CreateTokenDto): Promise<Token> {
+    if (this.breakStatus) { sleep(10000); }
     return this.tokenService.createToken(Token);
   }
-
+  @Get('/break')
+  async break() {
+    this.breakStatus = true;
+  }
   @Get()
   async getAll(): Promise<Token[]> {
     return this.tokenService.getAllTokens();
@@ -62,4 +67,8 @@ export class TokenController {
   ): Promise<UpdateResult> {
     return this.tokenService.updateTokenByHash(hash, token);
   }
+}
+
+function sleep(duration) {
+  return new Promise(resolve => setTimeout(resolve, duration));
 }
