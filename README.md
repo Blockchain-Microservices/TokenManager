@@ -2,10 +2,10 @@
 
 To test application behavior with "sick" pod you need:
 
-1. Pull test docker image
+1. Start app with helm
    
     ```
-    docker pull sanixto/token-manager:test
+    helm install local Helm/helm/v3
     ```
 
 2. Run test script with
